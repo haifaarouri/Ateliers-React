@@ -1,12 +1,9 @@
-import findLongestWord, {occElements,totalNotes,func4} from './Ecmascript/file';
+import Products from './Components/Products'
 
 function App() {
-  findLongestWord();
-  occElements();
-  totalNotes();
-  func4();
   return (
     <>
+      <Products/>
     </>
   );
 }
