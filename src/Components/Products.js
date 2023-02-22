@@ -8,25 +8,47 @@ import { Alert } from 'react-bootstrap';
 
 export default class Products extends React.Component {
 
-    constructor(props){
+    constructor(props) {
         super(props);
         console.log("Products component");
         this.listProducts = AllProducts;
+        this.state = {
+            prodList: this.listProducts,
+        };
+        this.state = {
+            ...props, alertbienvenue: true, alertBuy: false
+        }
     }
-
-    buyProd = () => {
-
+    componentDidMount() {
+        setTimeout(() => {
+            this.setState({ alertbienvenue: false });
+        }, 3000);
     }
-
+    buy = () => {
+        if (!this.state.alertBuy) {
+            this.setState({ alertBuy: !this.state.alertBuy });
+            setTimeout(() => {
+                this.setState({ alertBuy: !this.state.alertBuy });
+            }, 2000);
+        }
+    }
     render() {
         return <div>
-            <Alert>Hey, Welcome to Our Shop MyStrore Thank you for choosing our strore</Alert>
-            {/* Product 1: <Product/> */}
+            {this.state.alertbienvenue && (<Alert variant="success">
+                <Alert.Heading>Hey, Welcome to Our Shop <b>MyStrore</b></Alert.Heading>
+                Thank you for choosing our strore, we hope you enjoy your shopping experience!
+                <hr />
+            </Alert>)}
             <Container>
                 <Row>
-                    <Col className="d-flex">{this.listProducts.map((p,index) => <Product key={index} prod={p}></Product>)}</Col>
+                    <Col className="d-flex">
+                        {this.listProducts.map((p, index) => <Product key={index} prod={p} handleBuy={this.buy}></Product>)}
+                    </Col>
                 </Row>
             </Container>
+            {this.state.alertBuy && (<Alert variant="info">
+                You Bought an item
+            </Alert>)}
         </div>
     }
 }
