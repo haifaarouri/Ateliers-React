@@ -6,7 +6,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { Alert } from 'react-bootstrap';
 
-export default function Products() {
+export default function Products(props) {
     const [{alertbienvenue}, setAlert] = useState({alertbienvenue:true})
     const [alertBuy, setAlertBuy] = useState(false)
 
@@ -16,10 +16,11 @@ export default function Products() {
             }, 3000);
     })
 
-    function buy (product){
+    function buy (p){
+        p.quantity--
         if (!alertBuy) {
-            setAlertBuy(  true );
-            product.quantity --;
+            setAlertBuy(true);
+            
         }
     }
 
@@ -38,7 +39,7 @@ export default function Products() {
     <Container>
         <Row>
             <Col className="d-flex">
-            {AllProducts.map((p, index) => <Product key={index} prod={p} handleBuy={buy}></Product>)}
+            {AllProducts.map((p, index) => <Product key={index} prod={p} handleBuy={() => buy(p)}></Product>)}
             </Col>
         </Row>
         {alertBuy && (<Alert variant="info">
@@ -47,50 +48,3 @@ export default function Products() {
     </Container>
     </div>;
 }
-
-// export default class Products extends React.Component {
-
-//     constructor(props) {
-//         super(props);
-//         console.log("Products component");
-//         this.listProducts = AllProducts;
-//         this.state = {
-//             prodList: this.listProducts,
-//         };
-//         this.state = {
-//             ...props, alertbienvenue: true, alertBuy: false
-//         }
-//     }
-//     componentDidMount() {
-//         setTimeout(() => {
-//             this.setState({ alertbienvenue: false });
-//         }, 3000);
-//     }
-//     buy = () => {
-//         if (!this.state.alertBuy) {
-//             this.setState({ alertBuy: !this.state.alertBuy });
-//             setTimeout(() => {
-//                 this.setState({ alertBuy: !this.state.alertBuy });
-//             }, 2000);
-//         }
-//     }
-//     render() {
-//         return <div>
-//             {this.state.alertbienvenue && (<Alert variant="success">
-//                 <Alert.Heading>Hey, Welcome to Our Shop <b>MyStrore</b></Alert.Heading>
-//                 Thank you for choosing our strore, we hope you enjoy your shopping experience!
-//                 <hr />
-//             </Alert>)}
-//             <Container>
-//                 <Row>
-//                     <Col className="d-flex">
-//                         {this.listProducts.map((p, index) => <Product key={index} prod={p} handleBuy={this.buy}></Product>)}
-//                     </Col>
-//                 </Row>
-//             </Container>
-//             {this.state.alertBuy && (<Alert variant="info">
-//                 You Bought an item
-//             </Alert>)}
-//         </div>
-//     }
-// }
