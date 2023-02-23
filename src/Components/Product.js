@@ -1,5 +1,6 @@
 import React, {useState} from "react";
 import { Card, Button } from 'react-bootstrap'
+import { NavLink } from "react-router-dom";
 
 export default function Products(props) {
     const [{ nbrlikes }, setLikes] = useState(props.prod.like)
@@ -13,7 +14,9 @@ export default function Products(props) {
         <Card.Img src={require('../assets/images/' + props.prod.img)}></Card.Img>
     </Card.Header>
     <Card.Body style={{ textAlign: "center" }}>
-        <Card.Title>{props.prod.name}</Card.Title>
+        <Card.Title>
+            <NavLink to="/details">{props.prod.name}</NavLink>
+        </Card.Title>
         <Card.Text>Price : {props.prod.price} DT</Card.Text>
         <Card.Text>Quantity : {props.prod.quantity}</Card.Text>
         <Card.Text>Likes : {props.prod.like}</Card.Text>
