@@ -10,8 +10,9 @@ function App() {
     <>
     <NavigationBar></NavigationBar>
     <Routes>
-      <Route path='/detail' element={<ProductDetails/>}/>
+      <Route path='/' element={<Products/>}/>
       <Route path='/products' element={<Products/>}/>
+      <Route path='/details/:name' element={<ProductDetails/>}/>
       <Route path='*' element={<NotFound/>}/>
     </Routes>
     </>
