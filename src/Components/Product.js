@@ -1,6 +1,7 @@
 import Card from "react-bootstrap/Card";
 import { Component, useState, useEffect } from 'react';
 import Button from "react-bootstrap/Button";
+import { Link } from "react-router-dom";
 
 function Product (props) {
     
@@ -16,7 +17,7 @@ function Product (props) {
         <Card style={{ width: '18rem' }} className={likes>5&&'bestProduct'}>
         <Card.Img variant="top" src={require("../assets/images/"+product.img)} height="200" width="50"/>
         <Card.Body>
-          <Card.Title>{product.title}</Card.Title>
+          <Card.Title><Link to={`/products/${product.name}`}>{product.name}</Link></Card.Title>
           <Card.Text>
           {product.description}
           </Card.Text>

@@ -2,10 +2,12 @@ import Product from "./Product";
 import { useEffect, useState } from 'react';
 import { Alert, Col, Container, Row } from "react-bootstrap";
 import products from '../products.json'
+import { useOutletContext } from "react-router-dom";
 function Products () {
     
     const [visible,setVisible]=useState(false)
     const [visible2,setVisible2]=useState(false)
+    const [currentUser] = useOutletContext();
 
     const buy=(product)=>{
         product.quantity--;
@@ -24,6 +26,7 @@ function Products () {
         return ( 
             <Container>
             <Row>
+            {currentUser}
            {visible2 &&  <Alert variant="success">
             <Alert.Heading>Hey, Welcome To Our Shop <strong> MyStore </strong>    </Alert.Heading>
             <p>
