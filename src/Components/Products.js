@@ -1,50 +1,67 @@
-import React, { useEffect, useState } from 'react';
-import Product from './Product'
-import AllProducts from '../products.json'
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import { Alert } from 'react-bootstrap';
+import Product from "./Product";
+import { useEffect, useState } from 'react';
+import { Alert, Col, Container, Row } from "react-bootstrap";
+// import products from '../products.json'
+import { useOutletContext } from "react-router-dom";
+import { getallProducts } from "../service/api";
+function Products () {
+    
+    const [visible,setVisible]=useState(false)
+    const [visible2,setVisible2]=useState(false)
+    const [currentUser] = useOutletContext();
 
-export default function Products(props) {
-    const [{alertbienvenue}, setAlert] = useState({alertbienvenue:true})
-    const [alertBuy, setAlertBuy] = useState(false)
+    const [prodList,setProdList]=useState([])
 
-    useEffect(()=> {
-        setTimeout(() => {
-            setAlert({alertbienvenue: false})
-            }, 3000);
-    })
-
-    function buy (p){
-        p.quantity--
-        if (!alertBuy) {
-            setAlertBuy(true);
-            
-        }
+    const buy=(product)=>{
+        product.quantity--;
+        setVisible(true);
+        setTimeout(()=>{setVisible(false)},2000)
     }
+    useEffect(() => {
+      setVisible2(true);
+      setTimeout(()=>{setVisible2(false)},3000)
+      return () => {
+        console.log("I m unmounting")
+      }
+    }, [])
+    
+    useEffect(() => {
+      getallProducts()
+      .then((res)=>setProdList(res.data))
+      .catch((err)=> console.log(err))
+    }, [])
 
-    useEffect(()=> {
-        setTimeout(() => {
-            setAlertBuy(false)
-            }, 2000);
-    }, [alertBuy])
+    //ou bien 
+    // const getAllProd = async () => {
+    //   const res = await getallProducts();
+    //   setProdList(res)
+    // }
 
-    return <div>
-        {alertbienvenue && (<Alert variant="success">
-        <Alert.Heading>Hey, Welcome to Our Shop <b>MyStore</b></Alert.Heading>
-        Thank you for choosing our strore, we hope you enjoy your shopping experience!
-        <hr />
-        </Alert>)}
-    <Container>
-        <Row>
-            <Col className="d-flex">
-            {AllProducts.map((p, index) => <Product key={index} prod={p} handleBuy={() => buy(p)}></Product>)}
-            </Col>
+        return ( 
+            <Container>
+            <Row>
+            {currentUser}
+           {visible2 &&  <Alert variant="success">
+            <Alert.Heading>Hey, Welcome To Our Shop <strong> MyStore </strong>    </Alert.Heading>
+            <p>
+            Thank you for choosing our store, we hope you enjoy your shopping experience!
+            </p>
+            <hr />
+          </Alert>
+        }
+            {prodList.map((element,index)=>
+                <Col key={index}>
+                <Product product={element} buyFunction={buy}/>
+                </Col>
+            )}
+         {visible &&   <Alert style={{ marginTop: "30px" }} variant="primary">
+            <p>
+            You Bought an Item
+            </p>
+             </Alert>}
         </Row>
-        {alertBuy && (<Alert variant="info">
-            You Bought an item
-        </Alert>)}
-    </Container>
-    </div>;
+        </Container> );
+    
 }
+ 
+export default Products;

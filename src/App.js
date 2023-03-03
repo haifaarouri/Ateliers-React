@@ -1,26 +1,40 @@
-import { Route, Routes } from 'react-router-dom'
-import React, { Suspense } from 'react'
-import NavigationBar from './Components/NavigationBar'
+import { lazy, Suspense } from 'react';
+import { Route, Routes } from 'react-router-dom';
+import './App.css';
+// import AddProduct from './Components/AddProduct';
+import CustomNavbar from './Components/CustomNavbar';
+
+
+const Home = lazy(()=>import('./Components/Home'));
+const ProductDetails = lazy(()=>import('./Components/ProductDetails'));
+
+const Products = lazy(()=>import('./Components/Products'));
+const ProductLayout = lazy(()=>import('./Components/ProductLayout'));
+const NotFound = lazy(()=>import('./Components/NotFound'));
+const AddProduct = lazy(()=>import('./Components/AddProduct'));
 
 function App() {
-
-  const Products = React.lazy(()=>import('./Components/Products'))
-  const ProductDetails = React.lazy(()=>import('./Components/ProductDetails'))
-  const NotFound = React.lazy(()=>import('./Components/NotFound'))
-
   return (
+    // <Fragement>
     <>
-    <NavigationBar></NavigationBar>
-    <Suspense fallback={<p>Loading ...</p>}>
-      <Routes>
-        <Route path='/products'>
-          <Route path='/products' element={<Products/>}/>
-          <Route path='/products/details/:name' element={<ProductDetails/>}/>
-        </Route>
-        <Route path='*' element={<NotFound/>}/>
-      </Routes>
+  
+    {/* <Products/> */}
+    <Suspense fallback={<h1>Loaading ....</h1>}>
+    <CustomNavbar/>
+    <Routes>
+      <Route path="*" element={<NotFound/>}/>
+      <Route path="/" element={<h1>Home</h1>}/> 
+      <Route path="/home/:username" element={<Home/>}/> 
+      <Route path="/products" element={<ProductLayout />}>
+          {/* <Route index element={<Products />}/> */}
+          <Route path="list" element={<Products/>}/>
+          <Route path="add" element={<AddProduct/>}/>
+          <Route path=":name" element={<ProductDetails/>}/>
+      </Route>
+    </Routes>
     </Suspense>
     </>
+    // </Fragement>
   );
 }
 

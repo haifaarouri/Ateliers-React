@@ -1,5 +1,11 @@
-export default function NotFound() {
- return <div>
-    <img src={require('../assets/images/notfound.jfif')} alt="" style={{width: "100%"}}/>
- </div>;
+import React from 'react'
+import notfound from '../assets/images/notfound.jfif'
+const NotFound = () => {
+  return (
+    <div>
+    <img src={notfound} width="100%"/>
+    </div>
+  )
 }
+
+export default NotFound

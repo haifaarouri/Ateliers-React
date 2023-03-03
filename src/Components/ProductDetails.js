@@ -1,29 +1,68 @@
-import React from "react"
-import { useParams } from "react-router-dom"
-import AllProducts from '../products.json'
+import React, { useEffect, useState } from 'react'
+import { Container, Row, Col, Card } from "react-bootstrap";
+import { useParams } from 'react-router-dom';
+import { getallProducts } from '../service/api';
+// import products from "../products.json";
 
-export default function ProductDetails(props) { 
+function ProductDetails() {
+    const {prodId} = useParams();
+    // const product = products.find((product)=>product.name === name);
+    const [prod, setProd] = useState({})
 
-  const prodName = useParams()
-  console.log(prodName.name)
+    useEffect(()=>{
+      getallProducts(prodId)
+      .then((res)=>setProd(res.data))
+      .catch((err)=> console.log({message : "Product does not exist", err}))
+    }, [])
 
-  return <div className="container">
-        {AllProducts.filter(p => p.name === prodName.name).map(p=>(
-          <div className="d-flex">
-            <div>
-              <img src={require('../assets/images/' + p.img)} alt=""/>
-            </div>
-            <div style={{paddingTop: "5%"}}>
-              <h1>{prodName.name}</h1><br/>
-              <h3>Description</h3>
-              <p>{p.description}</p><br/>
-              <h3>Price</h3>
-              <p>{p.price} DT</p><br/>
-              <h3>Likes</h3>
-              <p>{p.like}</p>
-            </div>
-          </div>
-        ))
-        }
-    </div>;
+  return (
+    <Container style={{ marginTop: "30px" }}>
+        <Row>
+          <Col md={4}>
+            <Card.Img
+              variant="top"
+              src={require("../assets/images/" + prod.img)}
+              alt="Product Img"
+              height="300"
+            />
+          </Col>
+          <Col md={8}>
+          <Row>
+          <Col md={12}>
+            <h1>{prod.name}</h1>
+            </Col>
+            </Row>
+            <Row>
+            <Col md={12}>
+            <h5>Description</h5>
+            </Col>
+            <Col>
+            <p style={{ marginLeft: "50px"}}>
+            {prod.description}
+            </p>
+            </Col>
+            </Row>
+            <Row>
+            <Col md={12}>
+            <h5>Price</h5>
+            </Col>
+            <Col>
+            <p style={{ marginLeft: "50px"}}>{prod.price} DT</p>
+
+            </Col>
+            </Row>
+            <Row>
+            <Col md={12}>
+            <h5>Likes</h5>
+            </Col>
+            <Col>
+            <p style={{ marginLeft: "50px"}}>{prod.like}</p>
+            </Col>
+            </Row>
+          </Col>
+        </Row>
+      </Container>
+  )
 }
+
+export default ProductDetails

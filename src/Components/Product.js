@@ -1,29 +1,41 @@
-import React, { useState } from "react";
-import { Card, Button } from 'react-bootstrap'
+import Card from "react-bootstrap/Card";
+import { Component, useState, useEffect } from 'react';
+import Button from "react-bootstrap/Button";
 import { Link } from "react-router-dom";
 
-export default function Products(props) {
-    const [{ nbrlikes }, setLikes] = useState(props.prod.like)
+function Product (props) {
+    
+    const [product,setProduct] = useState(props.product)
+    const [likes,setLikes] = useState(props.product.like)
 
-    function addLikes() {
-        setLikes(props.prod.like += 1)
+    const like=()=>{
+      setLikes(likes+1);
     }
+    useEffect(()=>{console.log("Likes Update")},[])
 
-    return <Card className={props.prod.like > 5 ? 'flex bestProduct' : 'flex'}>
-        <Card.Header>
-            <Card.Img src={require('../assets/images/' + props.prod.img)}></Card.Img>
-        </Card.Header>
-        <Card.Body style={{ textAlign: "center" }}>
-            <Card.Title>
-                <Link to={`/products/details/${props.prod.name}`}>{props.prod.name}</Link>
-            </Card.Title>
-            <Card.Text>Price : {props.prod.price} DT</Card.Text>
-            <Card.Text>Quantity : {props.prod.quantity}</Card.Text>
-            <Card.Text>Likes : {props.prod.like}</Card.Text>
+        return ( 
+        <Card style={{ width: '18rem' }} className={likes>5&&'bestProduct'}>
+        <Card.Img variant="top" src={require("../assets/images/"+product.img)} height="200" width="50"/>
+        <Card.Body>
+          <Card.Title><Link to={`/products/${product.id}`}>{product.name}</Link></Card.Title>
+          <Card.Text>
+          {product.description}
+          </Card.Text>
+          <Card.Text>
+          Price :{product.price}
+          </Card.Text>
+          <Card.Text>
+          Quantity :{product.quantity}
+          </Card.Text>
+          <Card.Text>
+          Likes :{likes}
+          </Card.Text>
+          <Button variant="primary" onClick={like}>Like</Button>
+          <Button variant="primary" onClick={()=>props.buyFunction(product)} disabled={product.quantity<=0}>Buy</Button>
+
         </Card.Body>
-        <Card.Footer style={{ backgroundColor: "white" }}>
-            <Button variant="primary" onClick={addLikes}>Likes</Button>
-            <Button variant="info" style={{ float: "right", backGroundColor: "cyan" }} disabled={props.prod.quantity === 0} onClick={props.handleBuy}>Buy</Button>
-        </Card.Footer>
-    </Card>;
+      </Card> );
+
 }
+ 
+export default Product;
