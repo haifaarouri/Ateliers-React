@@ -13,9 +13,10 @@ function App() {
     <NavigationBar></NavigationBar>
     <Suspense fallback={<p>Loading ...</p>}>
       <Routes>
-        <Route path='/' element={<Products/>}/>
-        <Route path='/products' element={<Products/>}/>
-        <Route path='/details/:name' element={<ProductDetails/>}/>
+        <Route path='/products'>
+          <Route path='/products' element={<Products/>}/>
+          <Route path='/products/details/:name' element={<ProductDetails/>}/>
+        </Route>
         <Route path='*' element={<NotFound/>}/>
       </Routes>
     </Suspense>
