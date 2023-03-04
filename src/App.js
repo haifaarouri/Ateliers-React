@@ -12,6 +12,7 @@ const Products = lazy(()=>import('./Components/Products'));
 const ProductLayout = lazy(()=>import('./Components/ProductLayout'));
 const NotFound = lazy(()=>import('./Components/NotFound'));
 const AddProduct = lazy(()=>import('./Components/AddProduct'));
+const UpdateProduct = lazy(()=>import('./Components/UpdateProduct'));
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
           <Route path="list" element={<Products/>}/>
           <Route path="add" element={<AddProduct/>}/>
           <Route path=":name" element={<ProductDetails/>}/>
+          <Route path="edit/:prodId" element={<UpdateProduct/>}/>
       </Route>
     </Routes>
     </Suspense>

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Button, Container, Form } from "react-bootstrap";
 import { addProduct } from "../service/api";
-import { useNavigate } from "react-router-dom"; 
+import { Link, useNavigate } from "react-router-dom"; 
 
 export default function AddProduct() {
     const [p, setP] = useState({
@@ -58,9 +58,9 @@ export default function AddProduct() {
                 <Button variant="primary" type="submit" onClick={add}>
                     Add Product
                 </Button>
-                <Button variant="gray" type="reset">
-                    Save
-                </Button>
+                <Link className="btn btn-light" to={"/products/list"} variant="gray" type="reset">
+                    Cancel
+                </Link>
             </Form>
         </Container>
     )

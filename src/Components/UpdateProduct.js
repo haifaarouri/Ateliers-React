@@ -1,9 +1,13 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, Container, Form } from "react-bootstrap";
-import { addProduct } from "../service/api";
-import { useNavigate } from "react-router-dom"; 
+import { editProduct, getallProducts } from "../service/api";
+import { Link, useNavigate } from "react-router-dom";
+import { useParams } from "react-router";
 
-export default function AddProduct() {
+export default function UpdateProduct() {
+
+    const { prodId } = useParams();
+    console.log(prodId)
     const [p, setP] = useState({
         "name": "",
         "price": "",
@@ -12,6 +16,13 @@ export default function AddProduct() {
         "quantity": 0,
         "description": ""
     })
+    const navigate = useNavigate()
+
+    useEffect(() => {
+        getallProducts(prodId)
+            .then((res) => setP(res.data))
+            .catch((err) => console.log({ message: "Product does not exist", err }))
+    }, [])
 
     const handleChange = (e) => {
         console.log(e.target.value)
@@ -21,46 +32,47 @@ export default function AddProduct() {
 
     const handleChangeFile = (e) => {
         console.log(e.target.value)
-        setP({...p, img : e.target.files[0].name})
+        setP({ ...p, img: e.target.files[0].name })
         console.log(p)
     }
 
-    const navigate = useNavigate()
-    const add = (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault()
-        addProduct(p).then(()=> navigate('/products/list'))
+        editProduct(prodId, p)
+        .then(() => navigate('/products/list'))
+        .catch((err)=> console.log(err))
     }
 
     return (
         <Container style={{ marginTop: "30px" }}>
-            <Form>
+            <Form onSubmit={handleSubmit}>
                 <Form.Group className="mb-3" >
                     <Form.Label>Name</Form.Label>
-                    <Form.Control as="textarea" type="text" placeholder="Enter the name" name="name" onChange={(e)=>handleChange(e)}/>
+                    <Form.Control as="textarea" type="text" placeholder="Enter the name" name="name" defaultValue={p.name} onChange={handleChange}/>
                 </Form.Group>
 
                 <Form.Group className="mb-3" >
                     <Form.Label>Description</Form.Label>
-                    <Form.Control type="text" placeholder="Enter the product description"  name="description" onChange={(e)=>handleChange(e)}/>
+                    <Form.Control type="text" placeholder="Enter the product description" name="description" defaultValue={p.description} onChange={handleChange}/>
                 </Form.Group>
                 <Form.Group className="mb-3" >
                     <Form.Label>Price</Form.Label>
-                    <Form.Control type="number" name="price" onChange={(e)=>handleChange(e)}/>
+                    <Form.Control type="number" name="price" defaultValue={p.price} onChange={handleChange}/>
                 </Form.Group>
                 <Form.Group className="mb-3" >
                     <Form.Label>Quantity</Form.Label>
-                    <Form.Control type="number" name="quantity" onChange={(e)=>handleChange(e)}/>
+                    <Form.Control type="number" name="quantity" defaultValue={p.quantity} onChange={handleChange}/>
                 </Form.Group>
                 <Form.Group className="mb-3">
                     <Form.Label>Image</Form.Label>
-                    <Form.Control type="file" name="ima" onChange={(e)=>handleChangeFile(e)}/>
+                    <Form.Control type="file" name="img" defaultValue={p.img} onChange={handleChangeFile}/>
                 </Form.Group>
-                <Button variant="primary" type="submit" onClick={add}>
-                    Add Product
+                <Button variant="primary" type="submit">
+                    Update Product
                 </Button>
-                <Button variant="gray" type="reset">
-                    Save
-                </Button>
+                <Link to={"/products/list"} className="btn btn-secondary" variant="gray" type="reset">
+                    Cancel
+                </Link>
             </Form>
         </Container>
     )
