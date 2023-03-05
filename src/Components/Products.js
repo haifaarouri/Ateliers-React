@@ -1,14 +1,24 @@
 import Product from "./Product";
 import { useEffect, useState } from 'react';
 import { Alert, Col, Container, Row } from "react-bootstrap";
-import products from '../products.json'
 import { useOutletContext } from "react-router-dom";
+import { getProducts } from "../services/api";
 function Products () {
-    
+    const [products,setProducts] = useState([]);
     const [visible,setVisible]=useState(false)
     const [visible2,setVisible2]=useState(false)
     const [currentUser] = useOutletContext();
+    useEffect(() => {
+      getProducts()
+      .then((res)=>{setProducts(res.data);console.log(res)})
+      .catch((error)=>console.log(error))
 
+    }, [])
+    
+    // const getAllProduct=async()=>{
+    //   const res = await getProducts();
+    //   setProducts(res);
+    // }
     const buy=(product)=>{
         product.quantity--;
         setVisible(true);
@@ -26,7 +36,7 @@ function Products () {
         return ( 
             <Container>
             <Row>
-            {currentUser}
+            {/* {currentUser} */}
            {visible2 &&  <Alert variant="success">
             <Alert.Heading>Hey, Welcome To Our Shop <strong> MyStore </strong>    </Alert.Heading>
             <p>

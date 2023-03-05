@@ -6,7 +6,7 @@ import CustomNavbar from './Components/CustomNavbar';
 
 const Home = lazy(()=>import('./Components/Home'));
 const ProductDetails = lazy(()=>import('./Components/ProductDetails'));
-
+const AddProduct = lazy(()=>import('./Components/addProduct'));
 const Products = lazy(()=>import('./Components/Products'));
 const ProductLayout = lazy(()=>import('./Components/ProductLayout'));
 const NotFound = lazy(()=>import('./Components/NotFound'));
@@ -26,8 +26,8 @@ function App() {
       <Route path="/" element={<h1>Home</h1>}/> 
       <Route path="/home/:username" element={<Home/>}/> 
       <Route path="/products" element={<ProductLayout />}>
-          <Route index element={<Products />}/>
-          <Route path="add" element={<h1>Component Add Product</h1>}/>
+          <Route path="list" element={<Products />}/>
+          <Route path="add" element={<AddProduct/>}/>
           <Route path=":name" element={<ProductDetails/>}/>
       </Route>
     </Routes>
