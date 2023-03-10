@@ -1,27 +1,30 @@
 import React, { useEffect, useState } from 'react'
 import { Container, Row, Col, Card } from "react-bootstrap";
 import { useParams } from 'react-router-dom';
-import { getallProducts } from '../service/api';
-// import products from "../products.json";
+import { getProduct } from '../services/api';
 
 function ProductDetails() {
-    const {prodId} = useParams();
-    // const product = products.find((product)=>product.name === name);
-    const [prod, setProd] = useState({})
-
-    useEffect(()=>{
-      getallProducts(prodId)
-      .then((res)=>setProd(res.data))
-      .catch((err)=> console.log({message : "Product does not exist", err}))
-    }, [])
-
+    const param = useParams();
+    
+    const [product, setProduct] = useState({});
+    useEffect(() => {
+      getProductFunction();
+     
+    }, []);
+  
+    const getProductFunction = async () => {
+      const response = await getProduct(param.id);
+      setProduct(response.data);
+      console.log(response.data)
+    };
+    
   return (
     <Container style={{ marginTop: "30px" }}>
-        <Row>
+       {product.id !== undefined ? <Row>
           <Col md={4}>
             <Card.Img
               variant="top"
-              src={require("../assets/images/" + prod.img)}
+              src={require("../assets/images/" + product.img)}
               alt="Product Img"
               height="300"
             />
@@ -29,38 +32,45 @@ function ProductDetails() {
           <Col md={8}>
           <Row>
           <Col md={12}>
-            <h1>{prod.name}</h1>
+            <h1>{product.name}</h1>
             </Col>
             </Row>
             <Row>
             <Col md={12}>
-            <h5>Description</h5>
+            <h5>Description : </h5>
             </Col>
             <Col>
             <p style={{ marginLeft: "50px"}}>
-            {prod.description}
+            {product.description}
             </p>
             </Col>
             </Row>
             <Row>
             <Col md={12}>
-            <h5>Price</h5>
+            <h5>Price :</h5>
             </Col>
             <Col>
-            <p style={{ marginLeft: "50px"}}>{prod.price} DT</p>
+            <p style={{ marginLeft: "50px"}}>{product.price} DT</p>
+
+            </Col>
+            <Col md={12}>
+            <h5>Quantity :</h5>
+            </Col>
+            <Col>
+            <p style={{ marginLeft: "50px"}}>{product.quantity}</p>
 
             </Col>
             </Row>
             <Row>
             <Col md={12}>
-            <h5>Likes</h5>
+            <h5>Likes : </h5>
             </Col>
             <Col>
-            <p style={{ marginLeft: "50px"}}>{prod.like}</p>
+            <p style={{ marginLeft: "50px"}}>{product.like}</p>
             </Col>
             </Row>
           </Col>
-        </Row>
+        </Row> : <p> Product does not exist </p>}
       </Container>
   )
 }

@@ -14,7 +14,7 @@ const CustomNavbar = () => {
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="me-auto">
           <Nav.Link as={NavLink} to="/products/list" style={({isActive})=> ({textDecoration: isActive ? "underline" : "none"})}>Products</Nav.Link>
-          <Nav.Link as={NavLink} to="/products/add" style={({isActive})=> ({textDecoration: isActive ? "underline" : "none"})}>Add New Product</Nav.Link>
+          <Nav.Link as={NavLink} to="/products/add" style={({isActive})=> ({textDecoration: isActive ? "underline" : "none"})}>Add new product</Nav.Link>
          </Nav>
       </Navbar.Collapse>
     </Container>
