@@ -5,6 +5,8 @@ import CustomNavbar from './Components/CustomNavbar';
 
 
 const Home = lazy(()=>import('./Components/Home'));
+const UpdateProduct = lazy(()=>import('./Components/UpdateProduct'));
+
 const ProductDetails = lazy(()=>import('./Components/ProductDetails'));
 const AddProduct = lazy(()=>import('./Components/addProduct'));
 const Products = lazy(()=>import('./Components/Products'));
@@ -28,7 +30,9 @@ function App() {
       <Route path="/products" element={<ProductLayout />}>
           <Route path="list" element={<Products />}/>
           <Route path="add" element={<AddProduct/>}/>
-          <Route path=":name" element={<ProductDetails/>}/>
+      <Route path='update/:id' element={<UpdateProduct />}/>
+
+          <Route path=":id" element={<ProductDetails/>}/>
       </Route>
     </Routes>
     </Suspense>

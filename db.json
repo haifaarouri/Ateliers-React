@@ -11,7 +11,7 @@
     },
     {
       "id": 2,
-      "name": "Mouse",
+      "name": "Mousee",
       "price": "30",
       "img": "product2.jpg",
       "like": 0,
@@ -26,15 +26,6 @@
       "quantity": "40",
       "description": "test",
       "id": 3
-    },
-    {
-      "name": "test",
-      "price": "20",
-      "img": "product1.webp",
-      "like": 0,
-      "quantity": "20",
-      "description": "test",
-      "id": 4
     }
   ]
 }

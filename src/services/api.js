@@ -3,6 +3,9 @@ const apiUrl = "http://localhost:3001/products"
 export async function getProducts(){
     return await axios.get(apiUrl);
 }
+export async function getProduct(id){
+    return await axios.get(`${apiUrl}/${id}`);
+}
 export async function addProduct(product){
     return await axios.post(apiUrl,product);
 }

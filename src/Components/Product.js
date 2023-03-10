@@ -25,7 +25,7 @@ function Product(props) {
       />
       <Card.Body>
         <Card.Title>
-          <Link to={`/products/${product.name}`}>{product.name}</Link>
+          <Link to={`/products/${product.id}`}>{product.name}</Link>
         </Card.Title>
         <Card.Text>{product.description}</Card.Text>
         <Card.Text>Price :{product.price}</Card.Text>
@@ -47,6 +47,17 @@ function Product(props) {
             </Button>
           </Col>
         </Row>
+        <br></br>
+        <Row>
+            <Col md={6}>
+              {" "}
+              <Button variant="success" ><Link to={`/products/update/${product.id}`} style={{textDecoration :'none' ,color: 'white'}}>Update Product </Link></Button>
+            </Col>
+            <Col md={6}>
+              <Button variant="danger" onClick={() => props.deleteProd(product.id)}>Delete Product</Button>
+            </Col>
+            
+          </Row>
       </Card.Body>
     </Card>
   );
