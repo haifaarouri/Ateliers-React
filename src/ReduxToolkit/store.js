@@ -1,10 +1,19 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { combineReducers } from "redux";
+import { persistReducer } from "redux-persist";
+
 import logger from "redux-logger";
+import thunk from "redux-thunk";
 import counterSlice from "./slices/counterSlice";
-
+import productSlice from "./slices/productSlice";
+import storage from 'redux-persist/lib/storage'
+let configPersist = {
+    key:'root',
+    storage
+}
 const reducers = combineReducers({
-    counter:counterSlice
+    counter:counterSlice,
+    products:productSlice
 })
-
-export default configureStore({reducer:reducers,middleware:[logger]});
+const persistor = persistReducer(configPersist,reducers)
+export default configureStore({reducer:persistor,middleware:[thunk,logger]});

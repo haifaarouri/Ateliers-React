@@ -3,8 +3,11 @@ import { useEffect, useState } from 'react';
 import { Alert, Col, Container, Row } from "react-bootstrap";
 import { useOutletContext } from "react-router-dom";
 import { deleteProduct, getProducts } from "../services/api";
+import { useDispatch, useSelector } from "react-redux";
+import { populateProducts } from "../ReduxToolkit/slices/productSlice";
 function Products () {
-    const [products,setProducts] = useState([]);
+    const products = useSelector((state)=>state.products.products)
+    const dispatch= useDispatch();
     const [visible,setVisible]=useState(false)
     const [visible2,setVisible2]=useState(false)
     const [currentUser] = useOutletContext();
@@ -17,8 +20,8 @@ function Products () {
     }, [])
     
     const getAllProduct=async()=>{
-      const res = await getProducts();
-      setProducts(res.data);
+      await getProducts().then((res)=>dispatch(populateProducts(res.data)));
+      // setProducts(res.data);
     }
     const buy=(product)=>{
         product.quantity--;
@@ -52,7 +55,7 @@ function Products () {
             <hr />
           </Alert>
         }
-            {products.map((element,index)=>
+            {products && products.map((element,index)=>
                 <Col key={index}>
                 <Product product={element} buyFunction={buy} deleteProd={deleteProd}/>
                 </Col>
