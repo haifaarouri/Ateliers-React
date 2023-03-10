@@ -2,6 +2,7 @@ import { lazy, Suspense } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import './App.css';
 import CustomNavbar from './Components/CustomNavbar';
+import ReduxComponent from './Redux/ReduxComponent';
 
 
 const Home = lazy(()=>import('./Components/Home'));
@@ -25,7 +26,9 @@ function App() {
     <CustomNavbar/>
     <Routes>
       <Route path="*" element={<NotFound/>}/>
-      <Route path="/" element={<h1>Home</h1>}/> 
+      <Route path="/" element={<h1>Home</h1>}/>
+      <Route path="/redux" element={<ReduxComponent/>}/> 
+
       <Route path="/home/:username" element={<Home/>}/> 
       <Route path="/products" element={<ProductLayout />}>
           <Route path="list" element={<Products />}/>
