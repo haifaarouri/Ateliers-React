@@ -9,7 +9,8 @@ import counter from './Redux/Reducers/counterReducer';
 import { Provider } from 'react-redux';
 import logger from 'redux-logger';
 
-const store = createStore(counter,applyMiddleware(logger));
+// const store = createStore(counter,applyMiddleware(logger));
+import store from './ReduxToolkit/store'
 store.subscribe(()=>console.log(store.getState()))
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
