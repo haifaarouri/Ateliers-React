@@ -3,6 +3,7 @@ import { Route, Routes } from 'react-router-dom';
 import './App.css';
 import CustomNavbar from './Components/CustomNavbar';
 import ReduxComponent from './Redux/ReduxComponent';
+import ReduxToolkitComponent from './ReduxToolkit/Slices/ReduxToolkitComponent';
 
 
 const Home = lazy(()=>import('./Components/Home'));
@@ -29,6 +30,7 @@ function App() {
       <Route path="/" element={<h1>Home</h1>}/> 
       <Route path="/home/:username" element={<Home/>}/> 
       <Route path="/redux" element={<ReduxComponent/>}/> 
+      <Route path="/reduxToolkit" element={<ReduxToolkitComponent/>}/> 
       <Route path="/products" element={<ProductLayout />}>
           <Route path="list" element={<Products />}/>
           <Route path="add" element={<AddProduct/>}/>

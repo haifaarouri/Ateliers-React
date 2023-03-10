@@ -1,10 +1,9 @@
 import React from 'react'
 import { Button } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
-import { decrement, increment } from './actions'
+import { decrement, increment } from '../Slices/counterSlice'
 
-export default function ReduxComponent() {
-    // const counter = useSelector((state)=>state.counter)
+export default function ReduxToolkitComponent() {
     const counter = useSelector((state)=>state.counter.value)
     const dispatch = useDispatch()
   return (
