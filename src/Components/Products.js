@@ -1,7 +1,11 @@
 import Product from "./Product";
 import { useEffect, useState } from 'react';
-import { Alert, Col, Container, Row } from "react-bootstrap";
-import { useOutletContext } from "react-router-dom";
+import Alert from "react-bootstrap/Alert";
+import Col from "react-bootstrap/Col";
+import Container from "react-bootstrap/Container";
+import Row  from "react-bootstrap/Row";
+
+// import { useOutletContext } from "react-router-dom";
 import { deleteProduct, getProducts } from "../services/api";
 import { useDispatch, useSelector } from "react-redux";
 import { populateProducts } from "../ReduxToolkit/slices/productSlice";
@@ -10,7 +14,7 @@ function Products () {
     const dispatch= useDispatch();
     const [visible,setVisible]=useState(false)
     const [visible2,setVisible2]=useState(false)
-    const [currentUser] = useOutletContext();
+    // const [currentUser] = useOutletContext();
     useEffect(() => {
       // getProducts()
       // .then((res)=>{setProducts(res.data);console.log(res)})
@@ -56,7 +60,8 @@ function Products () {
           </Alert>
         }
             {products && products.map((element,index)=>
-                <Col key={index}>
+            
+                <Col key={index} >
                 <Product product={element} buyFunction={buy} deleteProd={deleteProd}/>
                 </Col>
             )}

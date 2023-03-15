@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
-import { Button, Container, Form } from "react-bootstrap";
+import { Button, Container, Form, Spinner } from "react-bootstrap";
+import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
+import { updateProductReducer } from "../ReduxToolkit/slices/productSlice";
 import { getProduct, updateProduct } from "../services/api";
 
 export default function UpdateProduct() {
@@ -15,8 +17,9 @@ export default function UpdateProduct() {
     quantity: 0,
     description: "",
   });
-  const { id, name, price, img, like, quantity, description } = product;
-  
+  const dispatch = useDispatch()
+  const { name, price, quantity, description } = product;
+  const [isLoading, setIsLoading] = useState(false);
   useEffect(() => {
     getProductFunction();
   }, []);
@@ -33,10 +36,15 @@ export default function UpdateProduct() {
     setProduct({ ...product, [e.target.name]: e.target.files[0].name });
   };
   const UpdateP= async () => {
+    setIsLoading(true);
     const res = await updateProduct(param.id,product);
     console.log(res)
-    if(res.status ===200)
-    navigate("/products/list");
+    if(res.status ===200){
+      setIsLoading(false);
+      dispatch(updateProductReducer(product))
+      navigate("/products/list");
+
+    }
     
   };
   return (
@@ -92,7 +100,22 @@ export default function UpdateProduct() {
               name="img"
             />
           </Form.Group>
-          <Button variant="primary" onClick={()=>UpdateP()}>Update Product</Button>
+          <Button variant="primary" onClick={()=>UpdateP()}>
+          {isLoading ? (
+            <>
+              <Spinner
+                as="span"
+                animation="border"
+                size="sm"
+                role="status"
+                aria-hidden="true"
+              />
+              Loading...
+            </>
+          ) : (
+            <> Update Product</>
+          )}
+          </Button>
           <Button onClick={() => navigate("/products")} variant="secondary">
             Cancel
           </Button>

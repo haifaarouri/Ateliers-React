@@ -4,7 +4,7 @@ import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
 function Home() {
     const navigate = useNavigate();
     const {username} = useParams();
-    const [searchParam,SetSearchParam] = useSearchParams();
+    const [searchParam,] = useSearchParams();
     console.log(searchParam.get('id'))
     const n = () =>{
             navigate("/products/add")
