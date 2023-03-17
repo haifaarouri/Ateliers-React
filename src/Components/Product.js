@@ -3,6 +3,8 @@ import { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import { Link } from "react-router-dom";
 import { Col, Row } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
+import { addToCart } from "../ReduxToolkit/slices/cartSlice";
 
 function Product(props) {
   const [product,] = useState(props.product);
@@ -14,7 +16,14 @@ function Product(props) {
   useEffect(() => {
     console.log("Likes Update");
   }, []);
-  const className = likes > 5 ?"bestProduct mx-auto my-2":"mx-auto my-2" ;
+  const className = likes > 5 ? "bestProduct mx-auto my-2" : "mx-auto my-2";
+
+  //const productRedux = useSelector((state) => state.product.product)
+  const dispatch = useDispatch();
+
+  const addProdToCart = (p) => {
+    dispatch(addToCart(p))
+  }
   return (
     <Card style={{ width: "18rem" }} className={className}>
       <Card.Img
@@ -39,8 +48,8 @@ function Product(props) {
           </Col>
           <Col md={6}>
             <Button
-            size="sm"
-              variant="primary"
+              size="sm"
+              variant="info"
               onClick={() => props.buyFunction(product)}
               disabled={product.quantity <= 0}
             >
@@ -50,15 +59,15 @@ function Product(props) {
         </Row>
         <br></br>
         <Row>
-            <Col md={6}>
-              {" "}
-              <Button variant="success" size="sm"><Link to={`/products/update/${product.id}`} style={{textDecoration :'none' ,color: 'white'}}>Update</Link></Button>
-            </Col>
-            <Col md={6}>
-              <Button variant="danger" size="sm" onClick={() => props.deleteProd(product.id)}>Delete</Button>
-            </Col>
-            
-          </Row>
+          <Col md={6}>
+            {" "}
+            <Button variant="success" size="sm"><Link to={`/products/update/${product.id}`} style={{ textDecoration: 'none', color: 'white' }}>Update</Link></Button>
+          </Col>
+          <Col md={6}>
+            <Button variant="danger" size="sm" onClick={() => props.deleteProd(product.id)}>Delete</Button>
+          </Col>
+        </Row>
+        <Button variant="success" size="sm" onClick={() => props.addProdToCart(product)}>ADD TO CART +</Button>
       </Card.Body>
     </Card>
   );

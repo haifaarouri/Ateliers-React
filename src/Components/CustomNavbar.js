@@ -6,6 +6,7 @@ import Container from 'react-bootstrap/Container';
 import {NavLink} from 'react-router-dom';
 
 const CustomNavbar = () => {
+  const nbr = 0
   return (
     <div> <Navbar bg="light" expand="lg">
     <Container>
@@ -15,6 +16,7 @@ const CustomNavbar = () => {
         <Nav className="me-auto">
           <Nav.Link as={NavLink} to="/products/list" style={({isActive})=> ({textDecoration: isActive ? "underline" : "none"})}>Products</Nav.Link>
           <Nav.Link as={NavLink} to="/products/add" style={({isActive})=> ({textDecoration: isActive ? "underline" : "none"})}>Add new product</Nav.Link>
+          <Nav.Link as={NavLink} to="/panier" style={({isActive})=> ({textDecoration: isActive ? "underline" : "none"})}>Panier {nbr}</Nav.Link>
          </Nav>
       </Navbar.Collapse>
     </Container>

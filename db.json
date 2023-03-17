@@ -12,10 +12,10 @@
     {
       "id": 2,
       "name": "Mousee",
-      "price": "30",
+      "price": "35",
       "img": "product2.jpg",
       "like": 0,
-      "quantity": 0,
+      "quantity": "0",
       "description": "Le lorem ipsum est, en imprimerie, une suite de mots sans signification utilisée à titre provisoire pour calibrer une mise en page"
     },
     {
@@ -24,35 +24,8 @@
       "img": "product3.jpg",
       "like": 0,
       "quantity": "40",
-      "description": "testttttt",
+      "description": "Le lorem ipsum est, en imprimerie, une suite de mots sans signification utilisée à titre provisoire pour calibrer une mise en page",
       "id": 3
-    },
-    {
-      "name": "vvv",
-      "price": "200",
-      "img": "product2.jpg",
-      "like": 0,
-      "quantity": "20",
-      "description": "lorem",
-      "id": 4
-    },
-    {
-      "name": "testt",
-      "price": "20",
-      "img": "product3.jpg",
-      "like": 0,
-      "quantity": "20",
-      "description": "test",
-      "id": 5
-    },
-    {
-      "name": "aaa",
-      "price": "20",
-      "img": "product3.jpg",
-      "like": 0,
-      "quantity": "20",
-      "description": "aaa",
-      "id": 6
     }
   ]
 }
