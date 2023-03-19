@@ -3,12 +3,13 @@ import { createSlice } from "@reduxjs/toolkit";
 const cartSlice = createSlice({
     name: 'cart',
     initialState: {
-        value: []
+        items: [],
     },
     reducers: {
         addToCart: (state, action) => {
-            var item = action.payload;
+            const item = action.payload;
             const existingItem = state.items.find((i) => i.id === item.id);
+
             if (existingItem) {
                 existingItem.quantity++;
             } else {

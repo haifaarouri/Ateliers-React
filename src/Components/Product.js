@@ -3,10 +3,14 @@ import { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import { Link } from "react-router-dom";
 import { Col, Row } from "react-bootstrap";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom/dist";
 import { addToCart } from "../ReduxToolkit/slices/cartSlice";
 
 function Product(props) {
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [product,] = useState(props.product);
   const [likes, setLikes] = useState(props.product.like);
 
@@ -17,9 +21,6 @@ function Product(props) {
     console.log("Likes Update");
   }, []);
   const className = likes > 5 ? "bestProduct mx-auto my-2" : "mx-auto my-2";
-
-  //const productRedux = useSelector((state) => state.product.product)
-  const dispatch = useDispatch();
 
   const addProdToCart = (p) => {
     dispatch(addToCart(p))
@@ -67,7 +68,7 @@ function Product(props) {
             <Button variant="danger" size="sm" onClick={() => props.deleteProd(product.id)}>Delete</Button>
           </Col>
         </Row>
-        <Button variant="success" size="sm" onClick={() => props.addProdToCart(product)}>ADD TO CART +</Button>
+        <Button variant="success" size="sm" onClick={() => {addProdToCart(product); navigate('/panier')}}>ADD TO CART +</Button>
       </Card.Body>
     </Card>
   );
